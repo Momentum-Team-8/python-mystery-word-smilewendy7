@@ -1,0 +1,8 @@
+1) filter words:
+l1_words = [ word for word in text if len(word)>=4 and len(word)<=6]
+
+2) replace()
+replace("a", "b")   ----- replace a with b
+
+3) string has index!
+check index: a.index("h")
