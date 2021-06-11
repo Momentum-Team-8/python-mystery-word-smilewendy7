@@ -6,3 +6,5 @@ replace("a", "b")   ----- replace a with b
 
 3) string has index!
 check index: a.index("h")
+
+4) index of repeat chr in list 
