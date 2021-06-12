@@ -16,9 +16,6 @@ def mystery_word(file):
             print(f"this word has {len(selected_word)} letters")
 
             guess_input= input("Please guess 1 letter per round")
-
-            # list_selected_word = [char for char in selected_word]
-            # print(list_selected_word)
             output_word= ""
             i=0
             guess_collection = []
@@ -32,8 +29,6 @@ def mystery_word(file):
                     if letter not in guess_collection:
                         output_word = output_word.replace(letter, "_")
                         
-                   
-
                 print(output_word)
                 if output_word == selected_word:
                     print("you win!")

@@ -8,3 +8,5 @@ replace("a", "b")   ----- replace a with b
 check index: a.index("h")
 
 4) index of repeat chr in list 
+
+5) check the lenght of list: len.value 
