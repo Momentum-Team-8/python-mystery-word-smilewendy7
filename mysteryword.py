@@ -6,6 +6,7 @@ def mystery_word(file):
 
         ## level 1 words
         l1_words = [ word for word in text if len(word)>=6]
+        l2_words = []
 
         input_level= input("Choose a level of difficulty")
 

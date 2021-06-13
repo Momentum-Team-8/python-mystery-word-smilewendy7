@@ -8,19 +8,24 @@ def evil_word(file):
     sample_4letters= ['fifo', 'Ivan', 'hire', 'undo', 'Addu', 'tuwi', 'snob', 'imbe', 'pean', 'list', 'stey', 'Jose', 'wear', 'mian', 'Esth', 'Cuba', 'esne', 'Luba', 'limp', 'penk', 'phon', 'axle', 'wren', 'emir', 'ipid', 'Teri', 'yali', 'Omar', 'slod', 'glor', 'rave', 'mess', 'daze', 'Bixa', 'felt', 'Sika', 'nais', 'sadr', 'iced', 'flak']
     small_sample= []
     output = ""
+    correct_guess_collection =[]
+    uess_collection =[]
 
     input_letter_size= input("Please enter How many letters the word contain: ")
     if input_letter_size=="4":
-        small_sample= ['fifo', 'Ivan', 'hire', 'undo', 'Addu', 'tuwi', 'snob']
+        # small_sample= ['fifo', 'Ivan', 'hire', 'undo', 'Addu', 'tuwi', 'snob']
+        small_sample=['fifo', 'Ivan', 'hire', 'undo', 'Addu', 'tuwi', 'snob', 'imbe', 'pean', 'list', 'stey', 'Jose', 'wear', 'mian', 'Esth', 'Cuba', 'esne', 'Luba', 'limp', 'penk', 'phon', 'axle', 'wren', 'emir', 'ipid', 'Teri', 'yali', 'Omar', 'slod', 'glor', 'rave', 'mess', 'daze', 'Bixa', 'felt', 'Sika', 'nais', 'sadr', 'iced', 'flak']
         output= "_ _ _ _"
     print(output)
 
     total_tries = 0
-    while total_tries < 8:
+    while total_tries < 30:
         ## game field
-        input_letter= input(f"guess 1 letter at each time, you have {8-total_tries} times guesses left!")
+        input_letter= input(f"guess 1 letter at each time, you have {30-total_tries} times guesses left!")
+        uess_collection.append(input_letter)
+        print(f"Used letters: {uess_collection}")
+
         family_dic= {}
-        guess_collection =[]
         family_key = ""
 
         for word in small_sample: 
@@ -32,15 +37,39 @@ def evil_word(file):
                 family_dic[family_key].append(word)
             else:
                 family_dic[family_key]= [word]
-                ##family key complete
-        #     print(family_dic[family_key])
-        # print(len(family_dic))
-        #e.g., {'_i__': ['fifo', 'hire'], '____': ['Ivan', 'undo', 'Addu', 'snob']}
-
 
         small_sample = get_max_list(family_dic)
         print("max list = " + str(small_sample))
+        print(f"you got {100-len(small_sample)/40*100} % chance to win the word!!")
+        print(input_letter)
+
+        #make correct guess collection for the final word: 
+        for word in small_sample:
+            if len(small_sample)==1 and input_letter in small_sample[0]:
+                output = small_sample[0]
+                correct_guess_collection.append(input_letter)
+            for letter in word:
+                if letter not in correct_guess_collection:
+                    output = output.replace(letter, "_")
+
+        ##### hint shows on the playground:
+        if input_letter in correct_guess_collection: 
+            print(f"Yes, there are {input_letter} in the word!!")
+        else:
+            print(f"Sorry, there are no {input_letter} 's.")
+
+        if output == small_sample[0]:
+            print("Congradulations! You win!!!")
+            try_again = input("Do you want to play again? yes -- to try again, no -- end the game. ")
+            if try_again == "yes":
+                evil_word(file)
+            else: 
+                print("Bye!")
+                exit()
+        print(output,correct_guess_collection)
+        
         total_tries = total_tries + 1
+    
     print("Sorry, you lose!")
     try_again = input("Do you want to play again? yes -- to try again, no -- end the game. ")
     if try_again == "yes":
@@ -56,9 +85,6 @@ def get_max_list(family_dict):
         if len(value) > len(max_list):
             max_list = value
     return max_list
-
-
-
 
 
 

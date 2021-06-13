@@ -10,3 +10,5 @@ check index: a.index("h")
 4) index of repeat chr in list 
 
 5) check the lenght of list: len.value 
+
+6) exit , back to the terminal: exit()
