@@ -4,26 +4,26 @@ def evil_word(file):
         text = word_list.read().split()
 
     ### 4 letters word; randomly sample 40 words;
-    four_letters_words = random.sample([word for word in text if len(word)==4],k=40)
+    # four_letters_words = random.sample([word for word in text if len(word)==4],k=40)
     sample_4letters= ['fifo', 'Ivan', 'hire', 'undo', 'Addu', 'tuwi', 'snob', 'imbe', 'pean', 'list', 'stey', 'Jose', 'wear', 'mian', 'Esth', 'Cuba', 'esne', 'Luba', 'limp', 'penk', 'phon', 'axle', 'wren', 'emir', 'ipid', 'Teri', 'yali', 'Omar', 'slod', 'glor', 'rave', 'mess', 'daze', 'Bixa', 'felt', 'Sika', 'nais', 'sadr', 'iced', 'flak']
-    small_sample= []
+    # small_sample= []
     output = ""
     correct_guess_collection =[]
     uess_collection =[]
 
     input_letter_size= input("Please enter How many letters the word contain: ")
     if input_letter_size=="4":
-        # small_sample= ['fifo', 'Ivan', 'hire', 'undo', 'Addu', 'tuwi', 'snob']
-        small_sample=['fifo', 'Ivan', 'hire', 'undo', 'Addu', 'tuwi', 'snob', 'imbe', 'pean', 'list', 'stey', 'Jose', 'wear', 'mian', 'Esth', 'Cuba', 'esne', 'Luba', 'limp', 'penk', 'phon', 'axle', 'wren', 'emir', 'ipid', 'Teri', 'yali', 'Omar', 'slod', 'glor', 'rave', 'mess', 'daze', 'Bixa', 'felt', 'Sika', 'nais', 'sadr', 'iced', 'flak']
+        small_sample= ['fifo', 'kiko', 'ffio', 'kkoi', 'tito', 'ttoi', 'poxy', 'piop']
+        # small_sample=random.sample([word for word in text if len(word)==4],k=60)
         output= "_ _ _ _"
     print(output)
 
     total_tries = 0
-    while total_tries < 30:
+    while total_tries < 10:
         ## game field
-        input_letter= input(f"guess 1 letter at each time, you have {30-total_tries} times guesses left!")
+        input_letter= input(f"guess 1 letter at each time, you have {10-total_tries} times guesses left!")
         uess_collection.append(input_letter)
-        print(f"Used letters: {uess_collection}")
+        print(f"Used letters: {sorted(uess_collection)}")
 
         family_dic= {}
         family_key = ""
@@ -39,9 +39,12 @@ def evil_word(file):
                 family_dic[family_key]= [word]
 
         small_sample = get_max_list(family_dic)
+
+        ##### *********  show the reduced list ********************
         print("max list = " + str(small_sample))
-        print(f"you got {100-len(small_sample)/40*100} % chance to win the word!!")
-        print(input_letter)
+        ##### *********  show the reduced list ********************
+        
+        # print(input_letter)
 
         #make correct guess collection for the final word: 
         for word in small_sample:
@@ -66,11 +69,18 @@ def evil_word(file):
             else: 
                 print("Bye!")
                 exit()
-        print(output,correct_guess_collection)
+        print(output)
+        # print(len(correct_guess_collection))
         
         total_tries = total_tries + 1
+
+        ###******** chance to win *************
+        chance_to_win = 100-len(small_sample)/40*100+2.5/4*len(correct_guess_collection)
+        print(f" *** you got {chance_to_win} % chance to win the word!! ***")
+        ###******** chance to win *************
+        print(family_dic)
     
-    print("Sorry, you lose!")
+    print(f"Sorry, you lose!, the word is {random.choice(small_sample)}")
     try_again = input("Do you want to play again? yes -- to try again, no -- end the game. ")
     if try_again == "yes":
         evil_word(file)
