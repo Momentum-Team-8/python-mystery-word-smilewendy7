@@ -1,28 +1,58 @@
+# next steps:
+# 1) fix case sensitive 2) add reminder of type 1 letter at a time
+
+## game rules:
+# 4 levels: 3,4,5,6 letters
+# 15 times to try
+
+### game secrect: 
+# ** only 1 words left or the max family has the same pattern, I will always pick the first word in the list as the fianl word.
 import random
 def evil_word(file):
     with open(file) as word_list:
         text = word_list.read().split()
 
-    ### 4 letters word; randomly sample 40 words;
-    # four_letters_words = random.sample([word for word in text if len(word)==4],k=40)
-    sample_4letters= ['fifo', 'Ivan', 'hire', 'undo', 'Addu', 'tuwi', 'snob', 'imbe', 'pean', 'list', 'stey', 'Jose', 'wear', 'mian', 'Esth', 'Cuba', 'esne', 'Luba', 'limp', 'penk', 'phon', 'axle', 'wren', 'emir', 'ipid', 'Teri', 'yali', 'Omar', 'slod', 'glor', 'rave', 'mess', 'daze', 'Bixa', 'felt', 'Sika', 'nais', 'sadr', 'iced', 'flak']
-    # small_sample= []
+    ### randomly sample 40 words from each word list;
+    three_letters_words = random.sample([word for word in text if len(word)==3],k=40)
+    four_letters_words = random.sample([word for word in text if len(word)==4],k=40)
+    five_letters_words = random.sample([word for word in text if len(word)==5],k=40)
+    six_letters_words = random.sample([word for word in text if len(word)==6],k=40)
+
     output = ""
     correct_guess_collection =[]
     guess_collection =[]
 
-    input_letter_size= input("Please enter How many letters the word contain: ")
+    input_letter_size= input("Please enter How many letters the word contain: Please enter 3 or 4 or 5 or 6 ")
+    if input_letter_size=="3":
+        small_sample=three_letters_words
+        output= "_ _ _ "
+        print(output)
+
     if input_letter_size=="4":
-        # small_sample= ['fifo', 'kiko', 'ffio', 'kkoi', 'tito', 'ttoi', 'poxy', 'piop']
-        small_sample=random.sample([word for word in text if len(word)==4],k=40)
+        small_sample=four_letters_words
         output= "_ _ _ _"
-    print(output)
+        print(output)
+    
+    if input_letter_size=="5":
+        small_sample=five_letters_words
+        output= "_ _ _ _ _"
+        print(output)
+
+    if input_letter_size=="6":
+        small_sample=five_letters_words
+        output= "_ _ _ _ _ _"
+        print(output)
 
     total_tries = 0
     while total_tries < 15:
         ## game field
         input_letter= input(f"guess 1 letter at each time, you have {15-total_tries} times guesses left!")
-        guess_collection.append(input_letter)
+        if input_letter not in guess_collection:
+            guess_collection.append(input_letter)
+            total_tries = total_tries + 1
+
+        else: 
+            print(f"Hi, you guessed {input_letter} before, please try other letters!")
         print(f"Used letters: {sorted(guess_collection)}")
 
         family_dic= {}
@@ -41,7 +71,7 @@ def evil_word(file):
         small_sample = get_max_list(family_dic)
 
         ##### *********  show the reduced list ********************
-        # print("max list = " + str(small_sample))
+        # print(f"max list = {small_sample}")
         ##### *********  show the reduced list ********************
 
         #make correct guess collection for the final word: 
@@ -69,11 +99,10 @@ def evil_word(file):
                 exit()
         print(output)
         # print(len(correct_guess_collection))
-        
-        total_tries = total_tries + 1
 
         ###******** chance to win *************
-        chance_to_win = 100-len(small_sample)/40*100+2.5/4*len(correct_guess_collection)
+        chance_to_win = 100-len(small_sample)/40*100 + 1/len(output)* len(correct_guess_collection)
+        #  2.5/len(output)
         print(f" *** you are {chance_to_win} % close to win the word!! ***")
         ###******** chance to win *************
     

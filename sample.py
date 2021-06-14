@@ -6,20 +6,36 @@ def evil_word(file):
     with open(file) as word_list:
         text = word_list.read().split()
 
-    ### 4 letters word; randomly sample 40 words;
-    # four_letters_words = random.sample([word for word in text if len(word)==4],k=40)
-    sample_4letters= ['fifo', 'Ivan', 'hire', 'undo', 'Addu', 'tuwi', 'snob', 'imbe', 'pean', 'list', 'stey', 'Jose', 'wear', 'mian', 'Esth', 'Cuba', 'esne', 'Luba', 'limp', 'penk', 'phon', 'axle', 'wren', 'emir', 'ipid', 'Teri', 'yali', 'Omar', 'slod', 'glor', 'rave', 'mess', 'daze', 'Bixa', 'felt', 'Sika', 'nais', 'sadr', 'iced', 'flak']
-    # small_sample= []
+    ### randomly sample 40 words from each word list;
+    three_letters_words = random.sample([word for word in text if len(word)==3],k=40)
+    four_letters_words = random.sample([word for word in text if len(word)==4],k=40)
+    five_letters_words = random.sample([word for word in text if len(word)==5],k=40)
+    six_letters_words = random.sample([word for word in text if len(word)==6],k=40)
+
     output = ""
     correct_guess_collection =[]
     guess_collection =[]
 
     input_letter_size= input("Please enter How many letters the word contain: ")
+    if input_letter_size=="3":
+        small_sample=three_letters_words
+        output= "_ _ _ "
+        print(output)
+
     if input_letter_size=="4":
-        # small_sample= ['fifo', 'kiko', 'ffio', 'kkoi', 'tito', 'ttoi', 'poxy', 'piop']
-        small_sample=random.sample([word for word in text if len(word)==4],k=60)
+        small_sample=four_letters_words
         output= "_ _ _ _"
-    print(output)
+        print(output)
+    
+    if input_letter_size=="5":
+        small_sample=five_letters_words
+        output= "_ _ _ _ _"
+        print(output)
+
+    if input_letter_size=="6":
+        small_sample=five_letters_words
+        output= "_ _ _ _ _ _"
+        print(output)
 
     total_tries = 0
     while total_tries < 15:
@@ -32,12 +48,6 @@ def evil_word(file):
         family_key = ""
         ### make the dic of word family
         for word in small_sample:
-            # if input_letter in small_sample[0]:
-            #     output = small_sample[0]
-            #     correct_guess_collection.append(input_letter)
-            #     for letter in small_sample[0]:
-            #         if letter not in correct_guess_collection:
-            #             output = output.replace(letter, "_")
             family_key = word
             for letter in word:
                 if letter != input_letter:
@@ -50,10 +60,8 @@ def evil_word(file):
         small_sample = get_max_list(family_dic)
 
         ##### *********  show the reduced list ********************
-        print("max list = " + str(small_sample))
+        print(f"max list = {small_sample}")
         ##### *********  show the reduced list ********************
-        
-        # print(input_letter)
 
         #make correct guess collection for the final word: 
         for word in small_sample :
@@ -84,10 +92,10 @@ def evil_word(file):
         total_tries = total_tries + 1
 
         ###******** chance to win *************
-        chance_to_win = 100-len(small_sample)/40*100+2.5/4*len(correct_guess_collection)
-        print(f" *** you got {chance_to_win} % chance to win the word!! ***")
+        chance_to_win = 100-len(small_sample)/40*100 + 1/len(output)* len(correct_guess_collection)
+        #  2.5/len(output)
+        print(f" *** you are {chance_to_win} % close to win the word!! ***")
         ###******** chance to win *************
-        # print(family_dic)
     
     print(f"Sorry, you lose!, the word is {random.choice(small_sample)}")
     try_again = input("Do you want to play again? yes -- to try again, no -- end the game. ")
@@ -104,10 +112,6 @@ def get_max_list(family_dict):
         if len(value) > len(max_list):
             max_list = value
     return max_list
-
-
-
-
 
 
 

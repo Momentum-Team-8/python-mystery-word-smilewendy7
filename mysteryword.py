@@ -3,7 +3,7 @@ def mystery_word(file):
     with open(file) as word_list:
         text = word_list.read().split()
 
-        ## level 1 words
+        ## 3 level words
         easy = [ word for word in text if len(word)>=4 and len(word)<=6 ] 
         normal = [ word for word in text if len(word)>=6 and len(word)<=8] 
         hard = [ word for word in text if len(word)>8] 
@@ -18,8 +18,6 @@ def mystery_word(file):
         else: 
             selected_word = random.choice(hard)
         print(f"this word has {len(selected_word)} letters")
-
-        # guess_input= input("Please guess 1 letter per round")
         guess_collection = []
         output_word= ""
         i=0
